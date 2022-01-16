@@ -42,22 +42,21 @@ def gmrt_guppi(rawfile, npol=2, header=None, chunk=None, samples_per_frame=4096,
         else:
             npcm_data=np.memmap(rawfile, dtype='<i1', mode='r', shape=(chunk,))
         npcm_data.flush()
-        #res=npc_data
-        #res=npcm_data
         real_d =npcm_data[::2] # odd indexed
         #im_d = npcm_data[1::2] # even indexed
 
-        pol1_real=real_d[::2]
-        #pol1_im =im_d[1::2]
-        pol2_real=real_d[1::2]
-        #pol2_im =im_d[::2]
-
-        pol1=pol1_real#+pol1_im*1j
-        pol2=pol2_real#+pol2_im*1j
+        #pol1, pol2 = npcm_data[::2], npcm_data[1::2] # if no imaginary is in the bytes
+        pol1, pol2 = real_d[::2], real_d[1::2]
+        
+        
+        # pol1_real, pol2_real = real_d[::2], real_d[1::2]
+        # pol1_im,pol2_im =im_d[1::2],im_d[::2] # if you need imaginary and real
+        # pol1=pol1_real#+pol1_im*1j
+        # pol2=pol2_real#+pol2_im*1j
+        
+        
         resd=np.array([pol1,pol2], dtype='int8').transpose()
-        # resd.shape, npcm_data.shape
         guppifile=rawname+'_guppi.0000.raw'
-
 
         fgh = guppi.open(guppifile, 'ws',#frames_per_file=2,
                     samples_per_frame=samples_per_frame, nchan=nchan, npol=npol,
