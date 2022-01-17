@@ -83,6 +83,6 @@ ftestw = guppi.open('/home/arunm77/GUPPIRAW/Guppi_test.0002.raw', 'ws',
                 npol=2, nchan=2048)
 ftestw.write(data_array)
 ftestw.close()
-ftestr = guppi.open('/home/arunm77/GUPPIRAW/Guppi_test.0002.raw', 'rs')
+ftestr = guppi.open('/home/arunm77/GUPPIRAW/Guppi_test.0000.raw', 'rs')
 dtest = ftestr.read()
 print(dtest.shape)
